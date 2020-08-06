@@ -1,0 +1,16 @@
+package com.example.employee.service;
+
+import com.example.employee.dto.EmployeeDto;
+import com.example.employee.exception.BadRequestException;
+import com.example.employee.exception.InternalServerErrorException;
+
+import java.util.List;
+
+public interface EmployeeService {
+
+    void addEmployee(EmployeeDto employeeDto) throws InternalServerErrorException;
+    List<EmployeeDto> getEmployees();
+    void deleteEmployee(int empId) throws BadRequestException;
+    EmployeeDto getEmployeeById(int empId) throws BadRequestException, InternalServerErrorException;
+    void updateEmployeeById(int empId, String name) throws BadRequestException, InternalServerErrorException;
+}
