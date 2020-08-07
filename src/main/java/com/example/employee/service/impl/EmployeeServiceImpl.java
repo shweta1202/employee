@@ -24,7 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public void addEmployee(@RequestBody EmployeeDto employeeDto) throws InternalServerErrorException {
+    public void addOrUpdateEmployee(@RequestBody EmployeeDto employeeDto) throws InternalServerErrorException {
         try {
             employeeRepository.save(employeeMapper.dtoToEntity(employeeDto));
         } catch (Exception e) {
@@ -60,17 +60,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         throw new BadRequestException("Couldn't find employee with id: "+ empId);
     }
-
-    @Override
-    public void updateEmployeeById(int empId, String name) throws BadRequestException {
-        try{
-            EmployeeDto employeeDto = getEmployeeById(empId);
-            employeeDto.setEmpName(name);
-            addEmployee(employeeDto);
-        } catch (Exception e){
-            throw new BadRequestException("Couldn't update employee with id: "+ empId);
-        }
-
-    }
-
 }

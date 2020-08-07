@@ -22,7 +22,7 @@ public class EmployeeController {
     @PostMapping(path = "/add")
     public ResponseEntity<ResponseMessageDto> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
-        employeeService.addEmployee(employeeDto);
+        employeeService.addOrUpdateEmployee(employeeDto);
         return new ResponseEntity<>(new ResponseMessageDto("Employee Added"),HttpStatus.OK);
     }
 
@@ -44,9 +44,9 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/update/{id}")
-    public ResponseEntity<ResponseMessageDto> updateEmployee(@PathVariable int id, @RequestBody EmployeeDto employeeDto) throws
+    public ResponseEntity<ResponseMessageDto> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
             BadRequestException, InternalServerErrorException{
-        employeeService.updateEmployeeById(id, employeeDto.getEmpName());
+        employeeService.addOrUpdateEmployee(employeeDto);
         return new ResponseEntity<>(new ResponseMessageDto("Employee data Updated"),HttpStatus.OK);
     }
 }

@@ -8,9 +8,8 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    void addEmployee(EmployeeDto employeeDto) throws InternalServerErrorException;
+    void addOrUpdateEmployee(EmployeeDto employeeDto) throws InternalServerErrorException;
     List<EmployeeDto> getEmployees();
     void deleteEmployee(int empId) throws BadRequestException;
     EmployeeDto getEmployeeById(int empId) throws BadRequestException, InternalServerErrorException;
-    void updateEmployeeById(int empId, String name) throws BadRequestException, InternalServerErrorException;
 }
