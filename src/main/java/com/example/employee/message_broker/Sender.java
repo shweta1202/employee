@@ -1,4 +1,4 @@
-package com.example.employee.mesaage_broker;
+package com.example.employee.message_broker;
 
 import com.example.employee.dto.EmployeeDto;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -22,6 +22,5 @@ public class Sender {
 
     public void send(EmployeeDto employeeDto) {
         rabbitTemplate.convertAndSend(exchange, routingKey, employeeDto);
-        System.out.println("Send msg = " + employeeDto);
     }
 }

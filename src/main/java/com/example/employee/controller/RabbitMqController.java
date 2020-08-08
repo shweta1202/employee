@@ -1,7 +1,8 @@
 package com.example.employee.controller;
 
+import com.example.employee.constant.Constants;
 import com.example.employee.dto.EmployeeDto;
-import com.example.employee.mesaage_broker.Sender;
+import com.example.employee.message_broker.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,6 @@ public class RabbitMqController {
     @PostMapping("/add")
     public String producer(@RequestBody EmployeeDto employeeDto) {
         rabbitMQSender.send(employeeDto);
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
+        return Constants.EMPLOYEE_UPDATE_PUBLISHED;
     }
 }
