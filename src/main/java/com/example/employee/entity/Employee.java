@@ -1,9 +1,15 @@
 package com.example.employee.entity;
 
+import com.example.employee.dto.EmployeeDto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "employee_data")
-public class Employee {
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@empId", scope = EmployeeDto.class)
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

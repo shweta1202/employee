@@ -43,7 +43,7 @@ public class EmployeeController {
         return new ResponseEntity(employeeService.getEmployeeById(id), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/update")
     public ResponseEntity<ResponseMessageDto> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
             BadRequestException, InternalServerErrorException{
         employeeService.addOrUpdateEmployee(employeeDto);
