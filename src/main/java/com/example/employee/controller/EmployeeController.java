@@ -1,7 +1,7 @@
 package com.example.employee.controller;
 
+import com.example.employee.constant.Constants;
 import com.example.employee.dto.EmployeeDto;
-import com.example.employee.dto.ResponseMessageDto;
 import com.example.employee.exception.BadRequestException;
 import com.example.employee.exception.InternalServerErrorException;
 import com.example.employee.service.EmployeeService;
@@ -20,21 +20,21 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<ResponseMessageDto> addEmployee(@RequestBody EmployeeDto employeeDto)
+    public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
         employeeService.addOrUpdateEmployee(employeeDto);
-        return new ResponseEntity<>(new ResponseMessageDto("Employee Added"),HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_ADDED);
     }
 
     @GetMapping(path = "/get")
-    public ResponseEntity<List<EmployeeDto>> getEmployees() {
+    public ResponseEntity<List<EmployeeDto>> getEmployees() throws InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployees(), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<ResponseMessageDto> deleteEmployee(@PathVariable int id) throws BadRequestException{
+    public ResponseEntity<String> deleteEmployee(@PathVariable int id) throws BadRequestException{
         employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(new ResponseMessageDto("Employee Deleted"), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_DELETED);
     }
 
     @GetMapping(path = "/get/{id}")
@@ -44,9 +44,9 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity<ResponseMessageDto> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
+    public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
             InternalServerErrorException{
         employeeService.addOrUpdateEmployee(employeeDto);
-        return new ResponseEntity<>(new ResponseMessageDto("Employee data Updated"),HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_UPDATED);
     }
 }

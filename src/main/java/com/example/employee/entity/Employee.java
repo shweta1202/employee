@@ -19,6 +19,9 @@ public class Employee implements Serializable {
     @Column(name = "emp_name")
     private String empName;
 
+    @Column(name = "designation")
+    private String designation;
+
     public int getEmpId() {
         return empId;
     }
@@ -33,5 +36,13 @@ public class Employee implements Serializable {
 
     public void setEmpName(String empName) {
         this.empName = empName;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 }

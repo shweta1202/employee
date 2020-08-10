@@ -1,28 +1,29 @@
 package com.example.employee.exception;
 
-import com.example.employee.dto.ResponseMessageDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class ExceptionsHandler {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionsHandler.class);
+
     @ExceptionHandler({BadRequestException.class})
-    @ResponseBody
-    public ResponseEntity<ResponseMessageDto> badRequestException(HttpServletRequest request, Exception e) {
-        return new ResponseEntity<>(new ResponseMessageDto(e.getMessage()),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> badRequestException(Exception e) {
+        return error(HttpStatus.BAD_REQUEST, e);
     }
 
     @ExceptionHandler({InternalServerErrorException.class})
-    @ResponseBody
-    public ResponseEntity<ResponseMessageDto> internalServerErrorException(HttpServletRequest request, Exception e) {
-        return new ResponseEntity<>(new ResponseMessageDto(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> internalServerErrorException(Exception e) {
+        return error(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
 
-
+    private ResponseEntity<String> error(HttpStatus status, Exception e) {
+        LOGGER.error("Exception: " + e);
+        return ResponseEntity.status(status).body(e.getMessage());
+    }
 }

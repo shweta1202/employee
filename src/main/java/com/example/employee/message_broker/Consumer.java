@@ -20,6 +20,6 @@ public class Consumer {
     @RabbitListener(queues = "${employee.queue.name}")
     public void receivedMessage(final EmployeeDto employee) throws InternalServerErrorException {
         employeeService.addOrUpdateEmployee(employee);
-        LOGGER.info(Constants.EMPLOYEE_UPDATED);
+        LOGGER.info(Constants.EMPLOYEE_DATA_UPDATED);
     }
 }
