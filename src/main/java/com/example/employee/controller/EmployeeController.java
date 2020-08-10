@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @PutMapping(path = "/update")
     public ResponseEntity<ResponseMessageDto> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
-            BadRequestException, InternalServerErrorException{
+            InternalServerErrorException{
         employeeService.addOrUpdateEmployee(employeeDto);
         return new ResponseEntity<>(new ResponseMessageDto("Employee data Updated"),HttpStatus.OK);
     }

@@ -7,15 +7,12 @@ import com.example.employee.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class Consumer {
-
     final private EmployeeService employeeService;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
-
     public Consumer(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }

@@ -33,8 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getEmployees() {
-        return employeeMapper.entityToDtoList((List<Employee>) employeeRepository.findAll());
+    public List<EmployeeDto> getEmployees() throws InternalServerErrorException{
+        try {
+            return employeeMapper.entityToDtoList((List<Employee>) employeeRepository.findAll());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Couldn't get Employees");
+        }
     }
 
     @Override

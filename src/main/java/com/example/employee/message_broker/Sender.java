@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Sender {
-
     final private AmqpTemplate rabbitTemplate;
 
     @Value("${employee.exchange.name}")
