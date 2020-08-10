@@ -29,7 +29,7 @@ public class EmployeeController {
      * @return the response entity
      * @throws InternalServerErrorException the internal server error exception
      */
-    @PostMapping(path = "/add") //todo - return id
+    @PostMapping(path = "/add")
     public ResponseEntity<ResponseDto> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
         final int id = employeeService.addOrUpdateEmployee(employeeDto);
@@ -42,7 +42,7 @@ public class EmployeeController {
      * @return the employees
      * @throws InternalServerErrorException the internal server error exception
      */
-    @GetMapping(path = "/get")//todo
+    @GetMapping(path = "/fetchAll")
     public ResponseEntity<List<EmployeeDto>> getEmployees() throws InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployees(), HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class EmployeeController {
      * @return the response entity
      * @throws BadRequestException the bad request exception
      */
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/deleteById/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable int id) throws BadRequestException{
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_DELETED);
@@ -68,7 +68,7 @@ public class EmployeeController {
      * @throws BadRequestException          the bad request exception
      * @throws InternalServerErrorException the internal server error exception
      */
-    @GetMapping(path = "/get/{id}")
+    @GetMapping(path = "/fetchById/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int id)
             throws BadRequestException,InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployeeById(id), HttpStatus.OK);
