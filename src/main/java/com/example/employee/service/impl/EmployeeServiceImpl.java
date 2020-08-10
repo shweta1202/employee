@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The type Employee service.
@@ -53,11 +52,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             List<EmployeeDto> employeeDtos = employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
             if(employeeDtos.isEmpty()) {
                 LOGGER.info("TTL Expired");
-                List<EmployeeDto> employeeDtoList = employeeMapper.entityToDtoList(employeeRepository.findAll());
-                LOGGER.info(String.valueOf(employeeDtoList));
-                //redisEmployeeRepository.setExpire("EMPLOYEE", 2, TimeUnit.MINUTES);
-                redisEmployeeRepository.saveAll(employeeMapper.dtoToEntityList(employeeDtoList));
-                LOGGER.info(redisEmployeeRepository.findAll().toString());
             }
             return employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
         } catch (Exception e) {
@@ -85,6 +79,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if(employee.isPresent()){
             return employeeMapper.entityToDto(employee.get());
+        }
+        else {
+            try {
+                employee = employeeRepository.findById(empId);
+            } catch (Exception e) {
+                throw new InternalServerErrorException();
+            }
+            if(employee.isPresent()){
+                redisEmployeeRepository.save(employee.get());
+                return employeeMapper.entityToDto(employee.get());
+            }
         }
         throw new BadRequestException("Couldn't find employee with id: "+ empId);
     }
