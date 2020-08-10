@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * The type Rabbit mq controller.
+ */
 @RestController
 @RequestMapping(path = "/queue")
 public class RabbitMqController {
@@ -17,6 +20,12 @@ public class RabbitMqController {
     @Autowired
     private Sender rabbitMQSender;
 
+    /**
+     * Producer string.
+     *
+     * @param employeeDto the employee dto
+     * @return the string
+     */
     @PostMapping("/add")
     public String producer(@RequestBody EmployeeDto employeeDto) {
         rabbitMQSender.send(employeeDto);

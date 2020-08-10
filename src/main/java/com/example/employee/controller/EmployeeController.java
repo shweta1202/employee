@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The type Employee controller.
+ */
 @RestController
 @RequestMapping(path = "/employee")
 public class EmployeeController {
@@ -19,6 +22,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * Add employee response entity.
+     *
+     * @param employeeDto the employee dto
+     * @return the response entity
+     * @throws InternalServerErrorException the internal server error exception
+     */
     @PostMapping(path = "/add")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
@@ -26,23 +36,51 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_ADDED);
     }
 
+    /**
+     * Gets employees.
+     *
+     * @return the employees
+     * @throws InternalServerErrorException the internal server error exception
+     */
     @GetMapping(path = "/get")
     public ResponseEntity<List<EmployeeDto>> getEmployees() throws InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployees(), HttpStatus.OK);
     }
 
+    /**
+     * Delete employee response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     * @throws BadRequestException the bad request exception
+     */
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable int id) throws BadRequestException{
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_DELETED);
     }
 
+    /**
+     * Gets employee by id.
+     *
+     * @param id the id
+     * @return the employee by id
+     * @throws BadRequestException          the bad request exception
+     * @throws InternalServerErrorException the internal server error exception
+     */
     @GetMapping(path = "/get/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int id)
             throws BadRequestException,InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployeeById(id), HttpStatus.OK);
     }
 
+    /**
+     * Update employee response entity.
+     *
+     * @param employeeDto the employee dto
+     * @return the response entity
+     * @throws InternalServerErrorException the internal server error exception
+     */
     @PutMapping(path = "/update")
     public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
             InternalServerErrorException{
