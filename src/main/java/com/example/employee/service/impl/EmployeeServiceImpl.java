@@ -52,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             List<EmployeeDto> employeeDtos = employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
             if(employeeDtos.isEmpty()) {
                 LOGGER.info("TTL Expired");
+                redisEmployeeRepository.saveAll(employeeRepository.findAll());
             }
             return employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
         } catch (Exception e) {
