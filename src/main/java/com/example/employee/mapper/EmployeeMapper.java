@@ -37,4 +37,12 @@ public interface EmployeeMapper {
      * @return the list
      */
     List<EmployeeDto> entityToDtoList(List<Employee> employees);
+
+    /**
+     * Dto to entity list list.
+     *
+     * @param employeeDto the employee dto
+     * @return the list
+     */
+    List<Employee> dtoToEntityList(List<EmployeeDto> employeeDto);
 }
