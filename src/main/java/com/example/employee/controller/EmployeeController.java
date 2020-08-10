@@ -2,6 +2,7 @@ package com.example.employee.controller;
 
 import com.example.employee.constant.Constants;
 import com.example.employee.dto.EmployeeDto;
+import com.example.employee.dto.ResponseDto;
 import com.example.employee.exception.BadRequestException;
 import com.example.employee.exception.InternalServerErrorException;
 import com.example.employee.service.EmployeeService;
@@ -21,7 +22,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
     /**
      * Add employee response entity.
      *
@@ -29,11 +29,11 @@ public class EmployeeController {
      * @return the response entity
      * @throws InternalServerErrorException the internal server error exception
      */
-    @PostMapping(path = "/add")
-    public ResponseEntity<String> addEmployee(@RequestBody EmployeeDto employeeDto)
+    @PostMapping(path = "/add") //todo - return id
+    public ResponseEntity<ResponseDto> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
-        employeeService.addOrUpdateEmployee(employeeDto);
-        return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_ADDED);
+        final int id = employeeService.addOrUpdateEmployee(employeeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(Constants.EMPLOYEE_DATA_ADDED,id));
     }
 
     /**
@@ -42,7 +42,7 @@ public class EmployeeController {
      * @return the employees
      * @throws InternalServerErrorException the internal server error exception
      */
-    @GetMapping(path = "/get")
+    @GetMapping(path = "/get")//todo
     public ResponseEntity<List<EmployeeDto>> getEmployees() throws InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployees(), HttpStatus.OK);
     }

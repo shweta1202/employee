@@ -17,7 +17,7 @@ public interface EmployeeService {
      * @param employeeDto the employee dto
      * @throws InternalServerErrorException the internal server error exception
      */
-    void addOrUpdateEmployee(EmployeeDto employeeDto) throws InternalServerErrorException;
+    int addOrUpdateEmployee(EmployeeDto employeeDto) throws InternalServerErrorException;
 
     /**
      * Gets employees.
