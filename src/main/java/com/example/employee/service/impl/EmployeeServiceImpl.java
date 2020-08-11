@@ -49,9 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDto> getEmployees() throws InternalServerErrorException{
         try {
             LOGGER.info("Fetching all Employees");
-            List<EmployeeDto> employeeDtos = employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
-            if(employeeDtos.isEmpty()) {
-                LOGGER.info("TTL Expired");
+            List<EmployeeDto> employeeDto = employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
+            LOGGER.info(redisEmployeeRepository.getSize().toString());
+            if(redisEmployeeRepository.getSize() != employeeRepository.count()) {
                 redisEmployeeRepository.saveAll(employeeRepository.findAll());
             }
             return employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());

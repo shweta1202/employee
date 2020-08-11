@@ -32,7 +32,7 @@ public class RedisEmployeeRepository {
     }
 
     public Employee findById(int id){
-        return (Employee) hashOperations.get("EMPLOYEE", id);
+        return hashOperations.get("EMPLOYEE", id);
     }
 
     public void update(Employee employee){
@@ -43,9 +43,14 @@ public class RedisEmployeeRepository {
         hashOperations.delete("EMPLOYEE", id);
     }
 
+    public Long getSize() {
+        return hashOperations.size("EMPLOYEE");
+    }
+
     public void saveAll(List<Employee> employeeList) {
         for(Employee e: employeeList) {
             hashOperations.put("EMPLOYEE", e.getEmpId(), e);
         }
+        redisTemplate.expire("EMPLOYEE", 1, TimeUnit.MINUTES);
     }
 }
