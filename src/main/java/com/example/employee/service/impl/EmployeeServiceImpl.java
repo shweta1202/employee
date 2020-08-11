@@ -23,35 +23,33 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
     @Autowired
     private EmployeeRepository employeeRepository;
-
     @Autowired
     private EmployeeMapper employeeMapper;
-
     @Autowired
     private RedisEmployeeRepository redisEmployeeRepository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
     @Override
-    public int addOrUpdateEmployee(@RequestBody EmployeeDto employeeDto) throws InternalServerErrorException {
+    public String addOrUpdateEmployee(@RequestBody EmployeeDto employeeDto) throws InternalServerErrorException {
         try {
             EmployeeDto employeeDto1 = employeeMapper
                     .entityToDto(employeeRepository.saveAndFlush(employeeMapper.dtoToEntity(employeeDto)));
             redisEmployeeRepository.save(employeeMapper.dtoToEntity(employeeDto1));
-            return employeeDto1.getEmpId();
+            return employeeDto1.getId();
         } catch (Exception e) {
             throw new InternalServerErrorException("Employee couldn't be added");
         }
     }
 
     @Override
-    public List<EmployeeDto> getEmployees() throws InternalServerErrorException{
+    public List<EmployeeDto> getEmployees() throws InternalServerErrorException {
         try {
             LOGGER.info("Fetching all Employees");
             List<EmployeeDto> employeeDto = employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
             LOGGER.info(redisEmployeeRepository.getSize().toString());
-            if(redisEmployeeRepository.getSize() != employeeRepository.count()) {
+            if (redisEmployeeRepository.getSize() != employeeRepository.count()) {
                 redisEmployeeRepository.saveAll(employeeRepository.findAll());
             }
             return employeeMapper.entityToDtoList(redisEmployeeRepository.findAll());
@@ -62,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(int empId) throws BadRequestException {
-        try{
+        try {
             employeeRepository.deleteById(empId);
             redisEmployeeRepository.delete(empId);
         } catch (Exception e) {
@@ -78,20 +76,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (Exception e) {
             throw new InternalServerErrorException();
         }
-        if(employee.isPresent()){
+        if (employee.isPresent()) {
             return employeeMapper.entityToDto(employee.get());
-        }
-        else {
+        } else {
             try {
                 employee = employeeRepository.findById(empId);
             } catch (Exception e) {
                 throw new InternalServerErrorException();
             }
-            if(employee.isPresent()){
+            if (employee.isPresent()) {
                 redisEmployeeRepository.save(employee.get());
                 return employeeMapper.entityToDto(employee.get());
             }
         }
-        throw new BadRequestException("Couldn't find employee with id: "+ empId);
+        throw new BadRequestException("Couldn't find employee with id: " + empId);
     }
 }

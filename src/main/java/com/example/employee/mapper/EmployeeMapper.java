@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * The interface Employee mapper.
  */
-@Mapper( componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR )
+@Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface EmployeeMapper {
 
     /**

@@ -3,7 +3,7 @@ package com.example.employee.exception;
 /**
  * The type Bad request exception.
  */
-public class BadRequestException extends Exception{
+public class BadRequestException extends Exception {
     private static final long serialVersionUID = 1L;
 
     private String message;

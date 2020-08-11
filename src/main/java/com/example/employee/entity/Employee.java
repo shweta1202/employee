@@ -3,9 +3,12 @@ package com.example.employee.entity;
 import com.example.employee.dto.EmployeeDto;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.springframework.data.redis.core.RedisHash;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -16,9 +19,13 @@ import java.io.Serializable;
 public class Employee implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)//todo
-    @Column(name = "emp_id")
-    private int empId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "emp_id", nullable = false, unique = true)
+    private String id;
 
     @Column(name = "emp_name")
     private String empName;
@@ -26,22 +33,13 @@ public class Employee implements Serializable {
     @Column(name = "designation")
     private String designation;
 
-    /**
-     * Gets emp id.
-     *
-     * @return the emp id
-     */
-    public int getEmpId() {
-        return empId;
+
+    public String getId() {
+        return id;
     }
 
-    /**
-     * Sets emp id.
-     *
-     * @param empId the emp id
-     */
-    public void setEmpId(int empId) {
-        this.empId = empId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

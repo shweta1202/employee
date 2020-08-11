@@ -13,33 +13,33 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class RedisEmployeeRepository {
 
-    final private HashOperations<String, Integer, Employee> hashOperations;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisEmployeeRepository.class);
+    final private HashOperations<String, String, Employee> hashOperations;
     final private RedisTemplate<String, Employee> redisTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisEmployeeRepository.class);
-
-    public RedisEmployeeRepository(RedisTemplate redisTemplate){
+    public RedisEmployeeRepository(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.hashOperations = this.redisTemplate.opsForHash();
     }
 
-    public void save(Employee employee){
-        hashOperations.put("EMPLOYEE", employee.getEmpId(), employee);
-        redisTemplate.expire("EMPLOYEE",1, TimeUnit.MINUTES);
+    public void save(Employee employee) {
+        hashOperations.put("EMPLOYEE", employee.getId(), employee);
+        redisTemplate.expire("EMPLOYEE", 1, TimeUnit.MINUTES);
     }
-    public List<Employee> findAll(){
+
+    public List<Employee> findAll() {
         return hashOperations.values("EMPLOYEE");
     }
 
-    public Employee findById(int id){
+    public Employee findById(int id) {
         return hashOperations.get("EMPLOYEE", id);
     }
 
-    public void update(Employee employee){
+    public void update(Employee employee) {
         save(employee);
     }
 
-    public void delete(int id){
+    public void delete(int id) {
         hashOperations.delete("EMPLOYEE", id);
     }
 
@@ -48,8 +48,8 @@ public class RedisEmployeeRepository {
     }
 
     public void saveAll(List<Employee> employeeList) {
-        for(Employee e: employeeList) {
-            hashOperations.put("EMPLOYEE", e.getEmpId(), e);
+        for (Employee e : employeeList) {
+            hashOperations.put("EMPLOYEE", e.getId(), e);
         }
         redisTemplate.expire("EMPLOYEE", 1, TimeUnit.MINUTES);
     }

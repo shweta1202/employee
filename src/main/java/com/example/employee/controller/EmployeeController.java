@@ -22,6 +22,7 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
     /**
      * Add employee response entity.
      *
@@ -32,8 +33,8 @@ public class EmployeeController {
     @PostMapping(path = "/add")
     public ResponseEntity<ResponseDto> addEmployee(@RequestBody EmployeeDto employeeDto)
             throws InternalServerErrorException {
-        final int id = employeeService.addOrUpdateEmployee(employeeDto);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(Constants.EMPLOYEE_DATA_ADDED,id));
+        final String id = employeeService.addOrUpdateEmployee(employeeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(Constants.EMPLOYEE_DATA_ADDED, id));
     }
 
     /**
@@ -55,7 +56,7 @@ public class EmployeeController {
      * @throws BadRequestException the bad request exception
      */
     @DeleteMapping(path = "/deleteById/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable int id) throws BadRequestException{
+    public ResponseEntity<String> deleteEmployee(@PathVariable int id) throws BadRequestException {
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_DELETED);
     }
@@ -70,7 +71,7 @@ public class EmployeeController {
      */
     @GetMapping(path = "/fetchById/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int id)
-            throws BadRequestException,InternalServerErrorException {
+            throws BadRequestException, InternalServerErrorException {
         return new ResponseEntity(employeeService.getEmployeeById(id), HttpStatus.OK);
     }
 
@@ -83,8 +84,9 @@ public class EmployeeController {
      */
     @PutMapping(path = "/update")
     public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDto employeeDto) throws
-            InternalServerErrorException{
+            InternalServerErrorException {
         employeeService.addOrUpdateEmployee(employeeDto);
         return ResponseEntity.status(HttpStatus.OK).body(Constants.EMPLOYEE_DATA_UPDATED);
     }
+
 }

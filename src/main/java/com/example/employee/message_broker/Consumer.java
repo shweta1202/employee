@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Consumer {
-    final private EmployeeService employeeService;
     private static final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
+    final private EmployeeService employeeService;
 
     /**
      * Instantiates a new Consumer.

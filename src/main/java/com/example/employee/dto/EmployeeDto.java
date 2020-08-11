@@ -5,26 +5,16 @@ package com.example.employee.dto;
  */
 public class EmployeeDto {
 
-    private int empId;
+    private String id;
     private String empName;
     private String designation;
 
-    /**
-     * Gets emp id.
-     *
-     * @return the emp id
-     */
-    public int getEmpId() {
-        return empId;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * Sets emp id.
-     *
-     * @param empId the emp id
-     */
-    public void setEmpId(int empId) {
-        this.empId = empId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**

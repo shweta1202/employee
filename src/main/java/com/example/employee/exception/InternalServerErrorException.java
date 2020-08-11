@@ -3,7 +3,7 @@ package com.example.employee.exception;
 /**
  * The type Internal server error exception.
  */
-public class InternalServerErrorException extends Exception{
+public class InternalServerErrorException extends Exception {
     private static final long serialVersionUID = 1L;
 
     private String message;

@@ -5,7 +5,7 @@ package com.example.employee.dto;
  */
 public class ResponseDto {
 
-    private int id;
+    private String id;
     private String message;
 
     /**
@@ -14,7 +14,7 @@ public class ResponseDto {
      * @param message the message
      * @param id      the id
      */
-    public ResponseDto(String message, int id) {
+    public ResponseDto(String message, String id) {
         this.message = message;
         this.id = id;
     }
@@ -24,7 +24,7 @@ public class ResponseDto {
      *
      * @return the id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -33,7 +33,7 @@ public class ResponseDto {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

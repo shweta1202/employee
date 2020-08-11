@@ -11,8 +11,6 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.util.concurrent.TimeUnit;
-
 @Configuration
 public class RedisConfiguration {
 
@@ -25,13 +23,14 @@ public class RedisConfiguration {
     protected JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(REDIS_HOSTNAME, REDIS_PORT);
         JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().build();
-        JedisConnectionFactory factory = new JedisConnectionFactory(configuration,jedisClientConfiguration);
+        JedisConnectionFactory factory = new JedisConnectionFactory(configuration, jedisClientConfiguration);
         factory.afterPropertiesSet();
         return factory;
     }
+
     @Bean
-    public RedisTemplate<String,Object> redisTemplate() {
-        final RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate() {
+        final RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new GenericToStringSerializer<>(Object.class));
         redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());

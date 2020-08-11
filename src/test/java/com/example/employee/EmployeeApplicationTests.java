@@ -13,7 +13,7 @@ class EmployeeApplicationTests {
      * Context loads.
      */
     @Test
-	void contextLoads() {
-	}
+    void contextLoads() {
+    }
 
 }
